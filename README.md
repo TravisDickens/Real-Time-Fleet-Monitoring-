@@ -102,45 +102,6 @@ Alerts include a 30-second cooldown per vehicle per alert type to avoid flooding
 | `/topic/alerts`     | Server to Client | Individual alert events in real-time     |
 | `/app/toggleAlerts` | Client to Server | Toggle alert broadcasting on/off         |
 
-## Quick Start
-
-### Docker Compose (recommended)
-
-```bash
-docker compose up --build
-```
-
-| Service   | URL                                    |
-| --------- | -------------------------------------- |
-| Frontend  | http://localhost:3000                   |
-| API       | http://localhost:8080/api/vehicles      |
-| Health    | http://localhost:8080/actuator/health   |
-
-### Local Development
-
-**Prerequisites:** Java 17+, Maven, Node.js 20+, PostgreSQL
-
-1. Start PostgreSQL and create the database:
-   ```sql
-   CREATE DATABASE fleetdb;
-   CREATE USER fleet WITH PASSWORD 'fleet';
-   GRANT ALL PRIVILEGES ON DATABASE fleetdb TO fleet;
-   ```
-
-2. Start the backend:
-   ```bash
-   cd backend
-   mvn spring-boot:run
-   ```
-
-3. Start the frontend:
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-
-4. Open http://localhost:5173
 
 ## Key Design Decisions
 
@@ -151,35 +112,3 @@ docker compose up --build
 | **STOMP over raw WebSocket** | STOMP provides topic-based pub/sub natively, which maps cleanly to the vehicle and alert channels. Spring has first-class STOMP support with `SimpMessagingTemplate`. |
 | **Separate vehicles + telemetry tables** | The `vehicles` table holds only the latest state (fast dashboard reads), while `telemetry` is append-only history. This avoids expensive queries on a high-volume table. |
 | **Persistent heading in simulator** | Vehicles maintain a direction of travel that drifts gradually instead of random-walking. Combined with momentum-based speed, this produces realistic-looking movement on the map. |
-
-## Project Structure
-
-```
-Fleet Monitoring/
-├── backend/                        Spring Boot 3.2 application
-│   ├── src/main/java/com/fleetmonitoring/
-│   │   ├── config/                 WebSocket + CORS configuration
-│   │   ├── controller/             REST endpoints + STOMP mappings
-│   │   ├── model/                  JPA entities (Vehicle, Telemetry, Alert)
-│   │   ├── repository/             Spring Data JPA repositories
-│   │   ├── service/                Business logic layer
-│   │   ├── simulator/              Vehicle telemetry simulator
-│   │   ├── alert/                  Alert detection engine
-│   │   └── websocket/              WebSocket broadcaster service
-│   ├── Dockerfile                  Multi-stage Maven build
-│   └── pom.xml
-├── frontend/                       React + Vite + TypeScript
-│   ├── src/
-│   │   ├── components/             FleetMap, MetricsPanel, AlertsPanel, VehicleMarker
-│   │   ├── hooks/                  useWebSocket, useAlerts
-│   │   ├── pages/                  Dashboard
-│   │   ├── services/               Axios REST client
-│   │   ├── store/                  Zustand state management
-│   │   └── utils/                  Constants and helpers
-│   ├── nginx.conf                  Reverse proxy for API + WebSocket
-│   └── Dockerfile                  Multi-stage Node build to nginx
-├── docs/
-│   └── architecture.png            System architecture diagram
-├── docker-compose.yml              Full stack orchestration
-└── README.md
-```
