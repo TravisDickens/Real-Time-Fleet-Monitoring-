@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+body {
+  margin: 0;
+  background: #0b0f1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Leaflet overrides */
+.leaflet-popup-content-wrapper {
+  background: #111827;
+  color: #d1d5db;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  font-family: "Inter", sans-serif;
+}
+
+.leaflet-popup-tip {
+  background: #111827;
+  border: 1px solid #1e293b;
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.leaflet-popup-close-button {
+  color: #6b7280 !important;
+  font-size: 18px !important;
+  top: 6px !important;
+  right: 8px !important;
+}
+
+.leaflet-container {
+  background: #0b0f1a;
+}
+
+/* Pulse animation for critical markers */
+@keyframes ping-slow {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.marker-ping {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
