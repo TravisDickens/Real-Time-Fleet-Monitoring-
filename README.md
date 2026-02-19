@@ -4,7 +4,7 @@ A full-stack real-time fleet monitoring system I designed and built to demonstra
 
 ## Motivation
 
-I wanted to build something that goes beyond typical CRUD applications -- a system that handles real-time data at scale, processes events as they happen, and presents operational insights through a purpose-built interface. Fleet monitoring sits at the intersection of IoT, streaming data, and geospatial visualization, making it an ideal domain to showcase these capabilities.
+I wanted to build something that goes beyond typical CRUD applications. A system that handles real-time data at scale, processes events as they happen, and presents operational insights through a purpose-built interface. Fleet monitoring sits at the intersection of IoT, streaming data, and geospatial visualization, making it an ideal domain to showcase these capabilities.
 
 ## Architecture
 
